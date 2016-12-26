@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Список дел</string>
+    <string name="hint_btn_description">Нажмите на +, чтобы добавить дело.</string>
+    <string name="description">Описание</string>
+    <string name="in_charge">Ответственный</string>
+    <string name="who">Кто: </string>
+    <string name="title">Название</string>
+    <string name="mnu_edit">Редактировать событие</string>
+    <string name="mnu_complete">Завершено</string>
+    <string name="mnu_delete">Удалить событие</string>
+    <string name="hint_enter_title">Введите название задачи...</string>
+    <string name="hint_enter_description">Введите описание задачи...</string>
+    <string name="btn_add">Добавить</string>
+    <string name="btn_cancel">Отменить</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="adding_task_title">Добавить задачу</string>
+    <string name="err_title">Длина названия задачи должна быть не менее 3 символов.</string>
+    <string name="err_description">Длина описания задачи не может быть менее 5 символов.</string>
+</resources>

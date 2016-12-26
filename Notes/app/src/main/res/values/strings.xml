@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <string name="hint_btn_description">Press + to add a new note.</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_add">Add new note</string>
+    <string name="btn_cansel">Cancel</string>
+    <string name="mnu_edit">Edit note</string>
+    <string name="mnu_delete">Delete note</string>
+</resources>

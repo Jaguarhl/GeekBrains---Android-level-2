@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Content Provider Explorer</string>
+    <string name="insert">Вставить</string>
+    <string name="update">Обновить</string>
+    <string name="delete">Удалить</string>
+    <string name="error">Ошибка</string>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Заметки</string>
+    <string name="hint_btn_description">Нажмите + для добавления новой записи.</string>
+    <string name="title">Заголовок</string>
+    <string name="note">Заметка</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_add">Добавить заметку</string>
+    <string name="btn_cansel">Отменить</string>
+    <string name="mnu_edit">Редактировать запись</string>
+    <string name="mnu_delete">Удалить запись</string>
+</resources>

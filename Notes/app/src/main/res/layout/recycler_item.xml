@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:elevation="4dp"
+        android:layout_weight="5">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <ImageButton
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/imgBtnMenu"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:background="@mipmap/open_menu" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTitle"
+                android:text="@string/title"
+                android:textSize="@dimen/fnt_title_size"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/imgBtnMenu"
+                android:layout_toRightOf="@+id/imageStatus"
+                android:layout_toEndOf="@+id/imageStatus"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="25dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDescription"
+                android:text="@string/note"
+                android:textSize="@dimen/fnt_description_size"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="25dp"
+                android:layout_toRightOf="@+id/imageStatus"
+                android:layout_toEndOf="@+id/imageStatus" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDateTo"
+                android:textSize="@dimen/fnt_description_size"
+                android:layout_toRightOf="@+id/txtInCharge"
+                android:layout_below="@+id/txtDescription"
+                android:textStyle="bold|italic"
+                android:layout_width="140dp" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

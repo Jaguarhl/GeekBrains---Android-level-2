@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">TODO List</string>
+    <string name="hint_btn_description">Press + to add a deal.</string>
+    <string name="description">Description</string>
+    <string name="in_charge">Who will do task</string>
+    <string name="who">Who: </string>
+    <string name="title">Title</string>
+    <string name="mnu_edit">Edit event</string>
+    <string name="mnu_complete">Completed</string>
+    <string name="mnu_delete">Delete event</string>
+    <string name="symbol">&#8942;</string>
+    <string name="hint_enter_title">Enter title of task...</string>
+    <string name="hint_enter_description">Enter details of task...</string>
+    <string name="btn_add">Add task</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
+    <string name="adding_task_title">Add a task</string>
+    <string name="err_title">Enter 3 symbols minimum for title of task.</string>
+    <string name="err_description">Enter minimum 5 symbols for description.</string>
+</resources>
