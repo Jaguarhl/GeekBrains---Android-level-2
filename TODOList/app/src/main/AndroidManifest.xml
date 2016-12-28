@@ -7,7 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.Design.NoActionBar">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.EditTask" android:label="@string/adding_task_title">
+        </activity>
+        <activity android:name=".activities.ManageUsers" android:label="@string/app_users_title">
+        </activity>
+        <activity android:name=".activities.EditUser" android:label="@string/app_user_edit">
         </activity>
         <provider
             android:authorities="ru.kartsev.dmitriy.todolist"

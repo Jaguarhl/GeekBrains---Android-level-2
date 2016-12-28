@@ -1,20 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Список дел</string>
+    <string name="app_users_title">Список пользователей</string>
     <string name="hint_btn_description">Нажмите на +, чтобы добавить дело.</string>
+    <string name="hint_btn_user_description">Нажмите на +, чтобы добавить исполнителя.</string>
     <string name="description">Описание</string>
     <string name="in_charge">Ответственный</string>
     <string name="who">Кто: </string>
     <string name="title">Название</string>
+    <string name="name">Имя исполнителя</string>
     <string name="mnu_edit">Редактировать событие</string>
     <string name="mnu_complete">Завершено</string>
     <string name="mnu_delete">Удалить событие</string>
+    <string name="mnu_edit_user">Редактировать исполнителя</string>
+    <string name="mnu_check_user_active">Сделать активным</string>
+    <string name="mnu_check_user_non_active">Сделать не активным</string>
+    <string name="mnu_delete_user">Удалить исполнителя</string>
     <string name="hint_enter_title">Введите название задачи...</string>
     <string name="hint_enter_description">Введите описание задачи...</string>
+    <string name="hint_enter_name">Введите имя исполнителя</string>
     <string name="btn_add">Добавить</string>
     <string name="btn_cancel">Отменить</string>
     <string name="btn_save">Сохранить</string>
+    <string name="btn_add_user">Добавить исполнителя</string>
     <string name="adding_task_title">Добавить задачу</string>
     <string name="err_title">Длина названия задачи должна быть не менее 3 символов.</string>
+    <string name="err_name">Длина имени исполнителя должна быть не менее 5 символов.</string>
     <string name="err_description">Длина описания задачи не может быть менее 5 символов.</string>
+    <string name="side_menu_profile_1">Управление задачами</string>
+    <string name="side_menu_priority_height">Высокий приоритет</string>
+    <string name="side_menu_priority_medium">Средний приоритет</string>
+    <string name="side_menu_priority_low">Низкий приоритет</string>
+    <string name="side_menu_profile_2">Управление исполнителями</string>
+    <string name="side_menu_user_add">Добавить исполнителя</string>
+    <string name="side_menu_user_delete">Удалить исполнителя</string>
 </resources>

@@ -60,7 +60,12 @@ public class DealsListAdapter extends RecyclerView.Adapter<DealsListAdapter.View
         }
         holder.txtTitle.setText(itemList.getTitle());
         holder.txtDescription.setText(itemList.getDescription());
-        holder.txtInCharge.setText(listInCharge.get(itemList.getInCharge() - 1).getName());
+        try{
+            holder.txtInCharge.setText(listInCharge.get(itemList.getInCharge() - 1).getName());
+        } catch (Exception e) {
+            holder.txtInCharge.setText(listInCharge.get(0).getName());
+            e.printStackTrace();
+        }
         holder.btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

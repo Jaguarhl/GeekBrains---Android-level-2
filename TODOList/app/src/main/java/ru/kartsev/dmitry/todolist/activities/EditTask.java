@@ -28,17 +28,13 @@ import ru.kartsev.dmitry.todolist.TaskItem;
 import ru.kartsev.dmitry.todolist.UsersCards;
 import ru.kartsev.dmitry.todolist.helpers.DBHelper;
 
-/**
- * Created by Jag on 18.12.2016.
- */
-
 public class EditTask extends Activity {
     public static final String STATE_VALUE_TASKTITLE = "ru.dmitry.kartsev.todolist.tasktitle";
     public static final String STATE_VALUE_TASKDESC = "ru.dmitry.kartsev.todolist.taskdesc";
     public static final int MAX_TITLE_LENGTH = 25;
     public static final int MAX_DESCRIPTION_LENGTH = 255;
-    public static final int MIN_TITLE_LENGTH = 3;
-    public static final int MIN_DESC_LENGTH = 5;
+    public static final int MIN_TITLE_LENGTH = 2;
+    public static final int MIN_DESC_LENGTH = 4;
     private static List<TaskItem> listItems;
     private static List<UsersCards> listInCharge;
     private boolean edit = false;
@@ -176,8 +172,12 @@ public class EditTask extends Activity {
         fillSpinnerData();
         if (edit) {
             btnOk.setText(R.string.btn_save);
-            inCharge.setSelection(getIndex(inCharge, listInCharge.get(listItems.get(
-                    itemPositionInList).getInCharge() - 1).getName()));
+            try {
+                inCharge.setSelection(getIndex(inCharge, listInCharge.get(listItems.get(
+                        itemPositionInList).getInCharge() - 1).getName()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         btnCancel = (Button) findViewById(R.id.btnCancel);
 

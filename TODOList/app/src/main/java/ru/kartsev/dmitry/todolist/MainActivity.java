@@ -7,15 +7,28 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.kartsev.dmitry.todolist.activities.ManageUsers;
 import ru.kartsev.dmitry.todolist.helpers.DBHelper;
 import ru.kartsev.dmitry.todolist.activities.EditTask;
 import ru.kartsev.dmitry.todolist.adapters.DealsListAdapter;
@@ -25,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String TODOLIST_INTENT_ACTION_EDIT = "ru.kartsev.dmitry.todolist.intent.action.edit";
     public static final String TODOLIST_INTENT_VALUE_ITEMPOSITION = "ru.kartsev.dmitry.todolist.intent.value.itemposition";
     public static final String TODOLIST_INTENT_VALUE_ITEMID = "ru.kartsev.dmitry.todolist.intent.value.itemid";
+    public static final String TODOLIST_INTENT_VALUE_USERPOSITION = "ru.kartsev.dmitry.todolist.intent.value.userposition";
+    public static final String TODOLIST_INTENT_VALUE_USERID = "ru.kartsev.dmitry.todolist.intent.value.userid";
     public static final String LOG_TAG = "BD_LOGS";
     private ImageButton addDeal;
     private RecyclerView dealsList;
@@ -33,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
     private List<UsersCards> listInCharge;
     private DBHelper dbHelper;
     private SQLiteDatabase database;
+    Toolbar toolbar;
 
     String[] title = { "Добавить первую задачу", "Отметить выполненным", "Удалить задачу" };
-    String[] users = { "Я", "Друг", "Подруга" };
+    String[] users = { "Не определено", "Я", "Друг", "Подруга" };
     String[] description = { "Добьте в список дел первую вашу задачу.", "Отметить данную задачу как выполненную.",
             "Удалите эту задачу из списка." };
     int[] active = { 1, 1, 1 };
@@ -49,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         initDatabase();
         fillDB();
         initViews();
+        initDrawer();
         setButtonBehavior();
     }
 
@@ -120,6 +137,61 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new DealsListAdapter(listItems, listInCharge, this);
         dealsList.setAdapter(adapter);
+
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.app_name);
+    }
+
+    private void initDrawer() {
+        new DrawerBuilder().withActivity(this).build();
+
+        PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem();
+        primaryDrawerItem.withName(R.string.side_menu_profile_1).withIcon(R.mipmap.ic_launcher);
+
+        SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem();
+        secondaryDrawerItem.withName(getResources().getString(R.string.side_menu_profile_2)).withIcon(R.drawable.users)
+                .withIdentifier(2);
+
+        DividerDrawerItem dividerDrawerItem = new DividerDrawerItem();
+
+        AccountHeader accountHeader = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.color.colorPrimaryDark)
+                .addProfiles(new ProfileDrawerItem().withName(getResources().getString(R.string.side_menu_profile_1))
+                                .withIcon(getResources().getDrawable(R.mipmap.ic_launcher)),
+                        new ProfileDrawerItem().withName(getResources().getString(R.string.side_menu_profile_2))
+                                .withIcon(getResources().getDrawable(R.drawable.users))
+                )
+                .withSelectionListEnabledForSingleProfile(false)
+                .build();
+
+        new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withAccountHeader(accountHeader)
+                .addDrawerItems(primaryDrawerItem, secondaryDrawerItem, dividerDrawerItem
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        int id = (int)drawerItem.getIdentifier();
+                        switch (id) {
+                            case 1: {
+                                Toast.makeText(MainActivity.this, "Это пункт 1", Toast.LENGTH_SHORT).show();
+                                break;
+                            }
+                            case 2: {
+                                ManageUsers.openView(MainActivity.this, listInCharge);
+                                /*
+                                Toast.makeText(MainActivity.this, "Это пункт 2", Toast.LENGTH_SHORT).show();
+                                 */
+                                break;
+                            }
+                        }
+                        return false;
+                    }
+                })
+                .build();
     }
 
     private void fillDB() {
