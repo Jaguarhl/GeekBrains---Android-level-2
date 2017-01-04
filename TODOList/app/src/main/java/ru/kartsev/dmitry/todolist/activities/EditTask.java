@@ -1,6 +1,7 @@
 package ru.kartsev.dmitry.todolist.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -22,13 +23,16 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import goldzweigapps.tabs.View.EasyTabs;
 import ru.kartsev.dmitry.todolist.MainActivity;
 import ru.kartsev.dmitry.todolist.R;
 import ru.kartsev.dmitry.todolist.TaskItem;
 import ru.kartsev.dmitry.todolist.UsersCards;
+import ru.kartsev.dmitry.todolist.fragments.AddTaskTabsFragment;
+import ru.kartsev.dmitry.todolist.fragments.AddTaskTabsFragment.onSelectTabEventListener;
 import ru.kartsev.dmitry.todolist.helpers.DBHelper;
 
-public class EditTask extends Activity {
+public class EditTask extends AppCompatActivity implements onSelectTabEventListener {
     public static final String STATE_VALUE_TASKTITLE = "ru.dmitry.kartsev.todolist.tasktitle";
     public static final String STATE_VALUE_TASKDESC = "ru.dmitry.kartsev.todolist.taskdesc";
     public static final int MAX_TITLE_LENGTH = 25;
@@ -46,6 +50,7 @@ public class EditTask extends Activity {
     private static int itemId = 0;
     private static int itemPositionInList = 0;
     private int lastUserSelected = 0;
+    private int itemType = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +66,8 @@ public class EditTask extends Activity {
             Log.d(MainActivity.LOG_TAG, "EditTask Intent - itemId = " + itemId);
             itemPositionInList = intent.getIntExtra(MainActivity.TODOLIST_INTENT_VALUE_ITEMPOSITION, 0);
             Log.d(MainActivity.LOG_TAG, "EditTask Intent - itemPositionInList = " + itemPositionInList);
+            itemType = intent.getIntExtra(MainActivity.TODOLIST_INTENT_VALUE_ITEMTYPE, 0);
+            Log.d(MainActivity.LOG_TAG, "EditTask Intent - itemType = " + itemType);
         } else {
             edit = false;
             Log.d(MainActivity.LOG_TAG, "EditTask Intent - not edit");
@@ -116,8 +123,9 @@ public class EditTask extends Activity {
                     cv.put(DBHelper.TB_DESC_COL_NAME, editDesc.getText().toString());
                     cv.put(DBHelper.TB_ACTIVE_COL_NAME, true);
                     cv.put(DBHelper.TB_INCHARGE_COL_NAME, listInCharge.get(inCharge.getSelectedItemPosition()).getIdInTable());
+                    cv.put(DBHelper.TB_TASKTYPE_COL_NAME, listItems.get(itemPositionInList).getTaskType());
                     Log.d(MainActivity.LOG_TAG, "Setted ID of user in " + DBHelper.TB_NAME +
-                            " to " + inCharge.getSelectedItemPosition());
+                            " to " + inCharge.getSelectedItemPosition() + "\nselected tab (task type) to " + listItems.get(itemPositionInList).getTaskType());
                     if (!edit) {
                         c.moveToLast();
                         database.insert(DBHelper.TB_NAME, null, cv);
@@ -184,6 +192,12 @@ public class EditTask extends Activity {
         if (edit) {
             editDesc.setText(listItems.get(itemPositionInList).getDescription());
             editTitile.setText(listItems.get(itemPositionInList).getTitle());
+            Fragment frag1 = getFragmentManager().findFragmentById(R.id.add_task_tabs);
+            if(frag1 != null) {
+                ((EasyTabs) frag1.getView().findViewById(R.id.easyTabs))
+                        .getTabLayout().getTabAt(itemType).select();
+                Log.d("TAB", "Setted tab to " + itemType);
+            }
         }
     }
 
@@ -230,5 +244,12 @@ public class EditTask extends Activity {
             }
         }
         return index;
+    }
+
+    @Override
+    public void onSelectTabEvent(int s) {
+        Fragment frag1 = getFragmentManager().findFragmentById(R.id.add_task_tabs);
+        listItems.get(itemPositionInList).setTaskType(s);
+        Log.d("TAB", "Setted tab to " + listItems.get(itemPositionInList).getTaskType());
     }
 }

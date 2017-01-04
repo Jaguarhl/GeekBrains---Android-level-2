@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TB_TITLE_COL_NAME = "title";
     public static final String TB_DESC_COL_NAME = "description";
     public static final String TB_ID_COL_NAME = "_id";
-    public static final String TB_PRIORITY_COL_NAME = "priority";
+    public static final String TB_TASKTYPE_COL_NAME = "priority";
     public static final String QUERY_ID = "_id=?";
     public static final String TB_USERNAME_COL_NAME = "uname";
     public static final String TB_USERS_NAME = "users";
@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         try {
             sqLiteDatabase.execSQL("CREATE TABLE " + TB_USERS_NAME + " (" + TB_ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TB_USERNAME_COL_NAME + " STRING, " + TB_ACTIVE_COL_NAME + " BOOLEAN);");
-            sqLiteDatabase.execSQL("CREATE TABLE " + TB_NAME +" (" + TB_ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TB_TITLE_COL_NAME + " STRING, " + TB_DESC_COL_NAME + " STRING, " + TB_ACTIVE_COL_NAME + " BOOLEAN, " + TB_INCHARGE_COL_NAME + " INTEGER REFERENCES users (_id)," + TB_PRIORITY_COL_NAME + " INTEGER);");
+            sqLiteDatabase.execSQL("CREATE TABLE " + TB_NAME +" (" + TB_ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TB_TITLE_COL_NAME + " STRING, " + TB_DESC_COL_NAME + " STRING, " + TB_ACTIVE_COL_NAME + " BOOLEAN, " + TB_INCHARGE_COL_NAME + " INTEGER REFERENCES users (_id)," + TB_TASKTYPE_COL_NAME + " INTEGER);");
         } catch (SQLException e) {
             e.printStackTrace();
         }

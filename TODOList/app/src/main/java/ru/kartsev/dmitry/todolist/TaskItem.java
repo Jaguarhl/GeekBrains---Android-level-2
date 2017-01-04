@@ -1,23 +1,21 @@
 package ru.kartsev.dmitry.todolist;
 
-/**
- * Created by Jag on 16.12.2016.
- */
-
 public class TaskItem {
 
     private String title;
     private String description;
-    boolean active = false;
-    int idInTable;
-    int inCharge;
+    private boolean active = false;
+    private int idInTable;
+    private int inCharge;
+    private int taskType = 0;
 
-    public TaskItem(String title, String description, boolean active, int idInTable, int inCharge) {
+    public TaskItem(String title, String description, boolean active, int idInTable, int inCharge, int type) {
         this.title = title;
         this.description = description;
         this.active = active;
         this.idInTable = idInTable;
         this.inCharge = inCharge;
+        this.taskType = type;
     }
 
     public String getTitle() {
@@ -50,5 +48,13 @@ public class TaskItem {
 
     public void setInCharge(int inCharge) {
         this.inCharge = inCharge;
+    }
+
+    public int getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(int taskType) {
+        this.taskType = taskType;
     }
 }

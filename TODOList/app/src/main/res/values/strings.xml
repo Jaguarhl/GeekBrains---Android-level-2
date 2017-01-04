@@ -36,4 +36,8 @@
     <string name="side_menu_profile_2">Manage users</string>
     <string name="side_menu_user_add">Add user</string>
     <string name="side_menu_user_delete">Delete user</string>
+    <string name="tabtitle">Regular task</string>
+    <string name="tabtitle_urgent">Urgent task</string>
+    <string name="tabtitle_important">Important task</string>
+    <string name="task_type">Type of task:</string>
 </resources>

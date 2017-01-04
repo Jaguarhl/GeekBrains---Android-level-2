@@ -26,10 +26,6 @@ import ru.kartsev.dmitry.todolist.helpers.DBHelper;
 
 import static android.support.v4.content.ContextCompat.startActivity;
 
-/**
- * Created by Jag on 16.12.2016.
- */
-
 public class DealsListAdapter extends RecyclerView.Adapter<DealsListAdapter.ViewHolder> {
 
     private List<TaskItem> listItems;
@@ -100,6 +96,8 @@ public class DealsListAdapter extends RecyclerView.Adapter<DealsListAdapter.View
                                 intent.putExtra(MainActivity.TODOLIST_INTENT_VALUE_ITEMPOSITION, position);
                                 intent.putExtra(MainActivity.TODOLIST_INTENT_VALUE_ITEMID,
                                         listItems.get(position).getIdInTable());
+                                intent.putExtra(MainActivity.TODOLIST_INTENT_VALUE_ITEMTYPE,
+                                        listItems.get(position).getTaskType());
                                 EditTask.openView(intent, mContext, listItems, listInCharge);
                                 break;
                             default:

@@ -5,6 +5,14 @@
     android:elevation="1dp"
     android:weightSum="1">
 
+
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:id="@+id/add_task_tabs"
+        android:name="ru.kartsev.dmitry.todolist.fragments.AddTaskTabsFragment" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

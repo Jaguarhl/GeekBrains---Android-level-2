@@ -34,4 +34,8 @@
     <string name="side_menu_profile_2">Управление исполнителями</string>
     <string name="side_menu_user_add">Добавить исполнителя</string>
     <string name="side_menu_user_delete">Удалить исполнителя</string>
+    <string name="tabtitle">Обычная задача</string>
+    <string name="tabtitle_urgent">Срочная задача</string>
+    <string name="tabtitle_important">Важная задача</string>
+    <string name="task_type">Тип задачи:</string>
 </resources>

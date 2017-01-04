@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TODOLIST_INTENT_ACTION_EDIT = "ru.kartsev.dmitry.todolist.intent.action.edit";
     public static final String TODOLIST_INTENT_VALUE_ITEMPOSITION = "ru.kartsev.dmitry.todolist.intent.value.itemposition";
     public static final String TODOLIST_INTENT_VALUE_ITEMID = "ru.kartsev.dmitry.todolist.intent.value.itemid";
+    public static final String TODOLIST_INTENT_VALUE_ITEMTYPE = "ru.kartsev.dmitry.todolist.intent.value.itemtype";
     public static final String TODOLIST_INTENT_VALUE_USERPOSITION = "ru.kartsev.dmitry.todolist.intent.value.userposition";
     public static final String TODOLIST_INTENT_VALUE_USERID = "ru.kartsev.dmitry.todolist.intent.value.userid";
     public static final String LOG_TAG = "BD_LOGS";
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             "Удалите эту задачу из списка." };
     int[] active = { 1, 1, 1 };
     int[] usersInCharge = { 1, 2, 3 };
+    int[] taskTypes = { 0, 0, 1 };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,10 +105,12 @@ public class MainActivity extends AppCompatActivity {
                 int descriptionColIndex = cursor.getColumnIndex(DBHelper.TB_DESC_COL_NAME);
                 int taskActive = cursor.getColumnIndex(DBHelper.TB_ACTIVE_COL_NAME);
                 int inCharge = cursor.getColumnIndex(DBHelper.TB_INCHARGE_COL_NAME);
+                int taskType = cursor.getColumnIndex(DBHelper.TB_TASKTYPE_COL_NAME);
 
                 do {
                    listItems.add(new TaskItem(cursor.getString(titleColIndex), cursor.getString(descriptionColIndex),
-                           cursor.getInt(taskActive) != 0, cursor.getInt(idIndex), cursor.getInt(inCharge)));
+                           cursor.getInt(taskActive) != 0, cursor.getInt(idIndex), cursor.getInt(inCharge),
+                           cursor.getInt(taskType)));
                 } while (cursor.moveToNext());
             }
 
@@ -177,14 +181,10 @@ public class MainActivity extends AppCompatActivity {
                         int id = (int)drawerItem.getIdentifier();
                         switch (id) {
                             case 1: {
-                                Toast.makeText(MainActivity.this, "Это пункт 1", Toast.LENGTH_SHORT).show();
                                 break;
                             }
                             case 2: {
                                 ManageUsers.openView(MainActivity.this, listInCharge);
-                                /*
-                                Toast.makeText(MainActivity.this, "Это пункт 2", Toast.LENGTH_SHORT).show();
-                                 */
                                 break;
                             }
                         }
@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                 cv.put(DBHelper.TB_DESC_COL_NAME, description[i]);
                 cv.put(DBHelper.TB_ACTIVE_COL_NAME, active[i]);
                 cv.put(DBHelper.TB_INCHARGE_COL_NAME, usersInCharge[i]);
+                cv.put(DBHelper.TB_TASKTYPE_COL_NAME, taskTypes[i]);
 
                 long countOfInsert = database.insert(DBHelper.TB_NAME, null, cv);
                 Log.d(LOG_TAG, "count of inserted rows = " + countOfInsert);
