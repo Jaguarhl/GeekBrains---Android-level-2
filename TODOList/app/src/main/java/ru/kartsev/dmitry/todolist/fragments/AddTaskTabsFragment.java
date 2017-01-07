@@ -33,7 +33,7 @@ public class AddTaskTabsFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        easyTabs = (EasyTabs)view.findViewById(R.id.easyTabs);
+        easyTabs = (EasyTabs) view.findViewById(R.id.easyTabs);
     }
 
     public interface onSelectTabEventListener {
@@ -70,18 +70,15 @@ public class AddTaskTabsFragment extends Fragment {
         ).setTabsBackgroundColor(getResources().getColor(R.color.colorPrimary))
                 .setIndicatorColor(getResources().getColor(R.color.md_white_1000))
                 .addIcons(
-                firstFragment.getIcon(),
-                secondFragment.getIcon(),
-                thirdFragment.getIcon())
+                        firstFragment.getIcon(),
+                        secondFragment.getIcon(),
+                        thirdFragment.getIcon())
                 .setIconFading(true)
                 .hideAllTitles(true)
                 .withListener(new TabsListener() {
 
                     @Override
                     public void onScreenPosition(int position) {
-                        /*
-                        getActivity().
-                         */
                         selectTabEventListener.onSelectTabEvent(position);
                         Log.d("tag", String.valueOf(position));
                     }

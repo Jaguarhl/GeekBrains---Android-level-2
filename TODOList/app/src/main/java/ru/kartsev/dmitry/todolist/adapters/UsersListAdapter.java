@@ -64,16 +64,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            /*case R.id.mnu_item_check_user_active:
-                                if (listUsers.get(position).isActive()) {
-                                    listUsers.get(position).setActive(false);
-                                } else {
-                                    listUsers.get(position).setActive(true);
-                                }
-                                setUserActive(listUsers.get(position).getIdInTable(),
-                                        listUsers.get(position).isActive());
-                                notifyDataSetChanged();
-                                break;*/
                             case R.id.mnu_item_delete_user:
                                 dbHelper = new DBHelper(mContext);
                                 SQLiteDatabase database = dbHelper.getWritableDatabase();
@@ -94,7 +84,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
                                 break;
                             case R.id.mnu_item_edit_user:
                                 Intent intent = new Intent(MainActivity.TODOLIST_INTENT_ACTION_EDIT,
-                                        null, mContext, EditTask.class);
+                                        null, mContext, EditUser.class);
                                 intent.putExtra(MainActivity.TODOLIST_INTENT_VALUE_USERPOSITION, position);
                                 intent.putExtra(MainActivity.TODOLIST_INTENT_VALUE_USERID,
                                         listUsers.get(position).getIdInTable());

@@ -3,8 +3,8 @@
     <color name="colorPrimary">#1e0404</color>
     <color name="colorPrimaryDark">#303030</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="taskHeightPriority">#b88080</color>
-    <color name="taskMediumPriority">#c6ede8</color>
+    <color name="taskUrgent">#6d6d2f</color>
+    <color name="taskImportant">#6d2f2f</color>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>

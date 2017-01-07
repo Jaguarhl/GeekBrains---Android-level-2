@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +57,23 @@ public class DealsListAdapter extends RecyclerView.Adapter<DealsListAdapter.View
         } else {
             holder.imgStatus.setImageResource(R.drawable.unchecked);
         }
+        switch(itemList.getTaskType()) {
+            case 1:
+                holder.itemRow.setBackgroundColor(ContextCompat.getColor(mContext, R.color.taskImportant));
+                /*
+                holder.itemRow.setBackgroundColor(Color.rgb(109, 47, 47));
+                 */
+                break;
+            case 2:
+                holder.itemRow.setBackgroundColor(ContextCompat.getColor(mContext, R.color.taskUrgent));
+                /*
+                holder.itemRow.setBackgroundColor(Color.rgb(109, 109, 47));
+                 */
+                break;
+            default:
+                break;
+        }
+
         holder.txtTitle.setText(itemList.getTitle());
         holder.txtDescription.setText(itemList.getDescription());
         try{
@@ -142,9 +162,11 @@ public class DealsListAdapter extends RecyclerView.Adapter<DealsListAdapter.View
         public TextView txtTitle, txtDescription, txtInCharge, txtDateTo;
         public ImageView imgStatus;
         public ImageButton btnMenu;
+        public RelativeLayout itemRow;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            itemRow = (RelativeLayout) itemView.findViewById(R.id.recyclerRow);
             imgStatus = (ImageView) itemView.findViewById(R.id.imageStatus);
             txtTitle = (TextView) itemView.findViewById(R.id.txtTitle);
             txtDescription = (TextView) itemView.findViewById(R.id.txtDescription);
