@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="imagesVariants">
+        <item>Horse</item>
+        <item>Supergirl</item>
+        <item>Fashion</item>
+        <item>Anime girl</item>
+    </string-array>
+    <string-array name="imagesUrls">
+        <item>http://cs9.pikabu.ru/post_img/big/2016/11/04/7/147825470719190539.jpg</item>
+        <item>https://s-media-cache-ak0.pinimg.com/originals/75/85/85/758585d8776788bca26a211d63f17cab.jpg</item>
+        <item>https://upload.wikimedia.org/wikipedia/commons/0/00/Gotsiy3edit2.jpg</item>
+        <item>http://www.walldevil.com/wallpapers/w07/anime-girls-magic.jpg</item>
+    </string-array>
+</resources>
