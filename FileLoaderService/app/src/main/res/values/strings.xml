@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">File Loader Service</string>
+    <string name="file_url">http://images.latinpost.com/data/images/full/7125/sherlock-holmes-in-221-b-baker-street.jpg</string>
+	<string name="file_url1">http://elelur.com/data_images/mammals/horse/horse-02.jpg</string>
+    <string name="complete">File loading complete.</string>
+    <string name="btn_close">Close</string>
+    <string name="exit">Exit</string>
+    <string name="save_data">Save data?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+    <string name="saved">Saved</string>
+    <string name="download_over">File loading complete.</string>
+    <string name="OK">OK</string>
+    <string name="loading">LOADING</string>
+</resources>
