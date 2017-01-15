@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleShapeView">
+        <attr name="shape_type" format="string" />
+        <attr name="shape_size" format="integer" />
+        <attr name="shape_animation" format="string" />
+        <attr name="shape_color" format="color" />
+        <attr name="shape_background_color" format="color" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Simple UI Animation</string>
+    <string name="btn_triangle">Triangle</string>
+    <string name="btn_circle">Circle</string>
+    <string name="btn_square">Square</string>
+    <string name="btn_rotate">Rotate</string>
+    <string name="btn_scale">Scale</string>
+    <string name="btn_alpha">Alpha</string>
+</resources>
