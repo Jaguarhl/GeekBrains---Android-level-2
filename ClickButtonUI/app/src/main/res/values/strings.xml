@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Click Button UI</string>
+    <string name="btn_clickme">Click me!</string>
+</resources>
