@@ -13,6 +13,18 @@
     tools:context="kartsev.dmitry.ru.simpleuianimation.MainActivity"
     android:weightSum="1">
 
+    <kartsev.dmitry.ru.simpleuianimation.views.SimpleShapeView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/shapeView"
+        app:shape_type="triangle"
+        app:shape_size="500"
+        app:shape_animation=""
+        app:shape_background_color="@color/colorWhite"
+        app:shape_color="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="95dp"/>
+
     <Button
         android:text="@string/btn_square"
         android:layout_width="120dp"
@@ -67,18 +79,5 @@
         android:layout_alignBottom="@+id/buttonRotate"
         android:layout_alignLeft="@+id/buttonTriangle"
         android:layout_alignStart="@+id/buttonTriangle" />
-
-    <kartsev.dmitry.ru.simpleuianimation.views.SimpleShapeView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/shapeView"
-        app:shape_type="triangle"
-        app:shape_size="500"
-        app:shape_animation=""
-        app:shape_background_color="@color/colorWhite"
-        app:shape_color="@color/colorPrimaryDark"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/buttonAlpha"/>
-
 
 </RelativeLayout>

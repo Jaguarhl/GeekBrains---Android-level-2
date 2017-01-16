@@ -10,7 +10,7 @@ import android.widget.Button;
 import kartsev.dmitry.ru.simpleuianimation.views.SimpleShapeView;
 
 public class MainActivity extends AppCompatActivity {
-    
+
     private Button btnTriangle, btnCircle, btnSquare, btnRotate, btnScale, btnAlpha;
     private SimpleShapeView shape;
 
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         initViews();
         setButtonsBehavior();
     }
