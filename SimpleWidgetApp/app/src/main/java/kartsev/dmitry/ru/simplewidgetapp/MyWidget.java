@@ -21,7 +21,7 @@ public class MyWidget extends AppWidgetProvider {
     private Context mContext;
     private AppWidgetManager widgetManager = null;
     private int[] widgetIds = null;
-    GPSTracker gps;
+    GPSTracker gps = null;
     private static final String UPDATE_ALL_WIDGETS = "update_all_widgets";
     /*StringBuilder sbGPS = new StringBuilder();
     StringBuilder sbNet = new StringBuilder();*/
@@ -31,7 +31,9 @@ public class MyWidget extends AppWidgetProvider {
         super.onEnabled(context);
         mContext = context;
         try {
+            /*
             GPSTracker gps = new GPSTracker(context);
+             */
             Intent intent = new Intent(context, MyWidget.class);
             intent.setAction(UPDATE_ALL_WIDGETS);
             PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
@@ -57,7 +59,9 @@ public class MyWidget extends AppWidgetProvider {
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int widgetId) {
         RemoteViews v = new RemoteViews(context.getPackageName(), R.layout.widget);
-        GPSTracker gps = new GPSTracker(context);
+        if(gps == null) {
+            gps = new GPSTracker(context);
+        }
         if(gps.canGetLocation()) {
             try {
                 v.setTextViewText(R.id.status, context.getResources().getString(R.string.gps_on));
