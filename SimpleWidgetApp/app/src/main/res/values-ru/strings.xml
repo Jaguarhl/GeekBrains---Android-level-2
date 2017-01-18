@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Simple Widget App</string>
+    <string name="widget_name">Геолокация</string>
+    <string name="latitude">Текущая ширина:</string>
+    <string name="longitude">Текущая долота:</string>
+    <string name="gps_on">GPS работает</string>
+    <string name="gps_off">GPS выключен</string>
+    <string name="none">Нет данных</string>
+</resources>

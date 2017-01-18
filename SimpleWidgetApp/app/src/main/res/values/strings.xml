@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Simple Widget App</string>
+    <string name="widget_name">Geolocation</string>
+    <string name="latitude">Current lalitude:</string>
+    <string name="longitude">Current longitude:</string>
+    <string name="gps_on">GPS on</string>
+    <string name="gps_off">GPS off</string>
+    <string name="none">Not available</string>
+</resources>
