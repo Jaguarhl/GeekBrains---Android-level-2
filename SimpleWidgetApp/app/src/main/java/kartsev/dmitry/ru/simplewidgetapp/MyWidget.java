@@ -66,8 +66,9 @@ public class MyWidget extends AppWidgetProvider {
             try {
                 v.setTextViewText(R.id.status, context.getResources().getString(R.string.gps_on));
                 DecimalFormat decimalFormat = new DecimalFormat("###.###");
-                v.setTextViewText(R.id.longitute, context.getResources().getString(R.string.longitude) + " " + decimalFormat.format(gps.getLatitude()));
-                v.setTextViewText(R.id.latitude, context.getResources().getString(R.string.latitude) + " " + decimalFormat.format(gps.getLongitude()));
+                v.setTextViewText(R.id.longitute, context.getResources().getString(R.string.latitude) + " " + decimalFormat.format(gps.getLatitude()));
+                v.setTextViewText(R.id.latitude, context.getResources().getString(R.string.longitude) + " " + decimalFormat.format(gps.getLongitude()));
+                v.setTextViewText(R.id.place, gps.getLocationAddress());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -90,6 +91,7 @@ public class MyWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         super.onDisabled(context);
+        gps.stopUsingGPS();
         Log.d(LOG_TAG, "onDisabled");
     }
 

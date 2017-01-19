@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,6 +14,11 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class GPSTracker extends Service implements LocationListener {
 
@@ -29,6 +36,7 @@ public class GPSTracker extends Service implements LocationListener {
     Location location; // location
     double latitude; // latitude
     double longitude; // longitude
+    String place; // address
 
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
@@ -136,6 +144,25 @@ public class GPSTracker extends Service implements LocationListener {
 
         // return longitude
         return longitude;
+    }
+
+    public String getLocationAddress() throws IOException {
+        if(location != null) {
+            try {
+                Geocoder gCoder = new Geocoder(mContext, Locale.getDefault());
+                List<Address> addresses = gCoder.getFromLocation(this.latitude, this.longitude, 1);
+                if ((addresses != null) && (addresses.size() > 0)) {
+                    place = addresses.get(0).getCountryName() + " " +addresses.get(0).getAdminArea() + " " + addresses.get(0).getThoroughfare();
+                    Log.d("GPSTracker", "Place detected as " + place);
+                } else {
+                    Log.d("NO-RESULT","NO-RESULT");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return place;
     }
 
     /**
