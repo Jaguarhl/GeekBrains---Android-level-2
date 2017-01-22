@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Map Google API App</string>
+    <string name="btn_set_current_location">Определить текущее положение</string>
+    <string name="btn_show_on_map">Показать на карте</string>
+    <string name="btn_find_address">Найти адрес</string>
+    <string name="btn_find_cafe_near">Найти кафе поблизости</string>
+    <string name="hint_location">Сейчас Вы находитесь здесь:</string>
+    <string name="error_no_location_set">Текущее месторасположение еще не определено.</string>
+    <string name="error_no_service_found">На устройстве не найдено программное обеспечение для работы с картами.</string>
+    <string name="dialog_enter_address">Введите адрес для поиска и отображения на карте:</string>
+    <string name="btn_show">Показать</string>
+    <string name="btn_cancel">Отменить</string>
+</resources>
