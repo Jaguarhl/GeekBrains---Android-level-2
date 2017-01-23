@@ -1,17 +1,21 @@
 package kartsev.dmitry.ru.mapgoogleapiapp;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import kartsev.dmitry.ru.mapgoogleapiapp.activity.MapActivity;
 import kartsev.dmitry.ru.mapgoogleapiapp.location.LocationActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,12 +32,16 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEARCH_STRING_BY_ADDRESS = "geo:0,0?q=";
     public static final String GOOGLE_MAPS_PACKAGE = "com.google.android.apps.maps";
     public static final String SEARCH_STRING_CAFE = "кафе, ресторан, бистро";
+    public static final String SEARCH_ADDRESS_LATITUDE = "SEARCH_ADDRESS_LATITUDE";
+    public static final String SEARCH_ADDRESS_LONGITUDE = "SEARCH_ADDRESS_LONGITUDE";
+    public static final String SEARCH_ADDRESS_ACTION = "SEARCH_ADDRESS_ACTION";
     LocationActivity locationActivity;
     private final Context mContext = this;
 
     Button btnViewOnMap, btnFindAddress, btnFindObjectsNear;
     ImageButton btnGetLocation;
     TextView currentLocation;
+    CheckBox checkViewMapInside;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         locationActivity = new LocationActivity(mContext);
 
+        checkPermissions();
         initViews();
         setButtonsBehavior();
     }
@@ -51,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
         btnFindAddress = (Button) findViewById(R.id.btnFindAddress);
         btnFindObjectsNear = (Button) findViewById(R.id.btnFindCafeNear);
         currentLocation = (TextView) findViewById(R.id.textLocation);
+        try {
+            currentLocation.setText(locationActivity.getLocationAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        checkViewMapInside = (CheckBox) findViewById(R.id.checkViewMapInside);
     }
 
     private void setButtonsBehavior() {
@@ -75,11 +91,17 @@ public class MainActivity extends AppCompatActivity {
         btnViewOnMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentLocation.getText().length() > 0) {
-                    showOnMapCurrent();
+                if(checkViewMapInside.isChecked()) {
+                    Intent intent = new Intent(mContext, MapActivity.class);
+                    intent.putExtra(SEARCH_ADDRESS_ACTION, "");
+                    mContext.startActivity(intent);
                 } else {
-                    Toast.makeText(mContext, mContext.getResources().getString(R.string.error_no_location_set),
-                            Toast.LENGTH_LONG).show();
+                    if (currentLocation.getText().length() > 0) {
+                        showOnMapCurrent();
+                    } else {
+                        Toast.makeText(mContext, mContext.getResources().getString(R.string.error_no_location_set),
+                                Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -99,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton(mContext.getResources().getString(R.string.btn_show),
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,int id) {
-                                        SearchAndShowAddress(addressToSearch.getText().toString());
+                                        searchAndShowAddress(addressToSearch.getText().toString());
                                     }
                                 })
                         .setNegativeButton(mContext.getResources().getString(R.string.btn_cancel),
@@ -139,16 +161,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void SearchAndShowAddress(String address) {
-        try {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SEARCH_STRING_BY_ADDRESS +
-                    address));
-            intent.setPackage(GOOGLE_MAPS_PACKAGE);
-            this.startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(mContext, mContext.getResources().getString(R.string.error_no_service_found),
-                    Toast.LENGTH_LONG).show();
+    private void searchAndShowAddress(String address) {
+        if (checkViewMapInside.isChecked()) {
+            Location loc = locationActivity.findLocationByAddress(address);
+            Intent intent = new Intent(mContext, MapActivity.class);
+            intent.putExtra(SEARCH_ADDRESS_ACTION, SEARCH_ADDRESS_ACTION);
+            intent.putExtra(SEARCH_ADDRESS_LATITUDE, loc.getLatitude());
+            intent.putExtra(SEARCH_ADDRESS_LONGITUDE, loc.getLongitude());
+            mContext.startActivity(intent);
+        } else {
+            try {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(SEARCH_STRING_BY_ADDRESS +
+                        address));
+                intent.setPackage(GOOGLE_MAPS_PACKAGE);
+                this.startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(mContext, mContext.getResources().getString(R.string.error_no_service_found),
+                        Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -162,6 +193,15 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(mContext, mContext.getResources().getString(R.string.error_no_service_found),
                     Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void checkPermissions() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            Toast.makeText(this, getString(R.string.error_not_all_permissions_granted), Toast.LENGTH_LONG).show();
         }
     }
 }

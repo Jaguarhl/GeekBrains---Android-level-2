@@ -7,7 +7,13 @@
     <string name="hint_location">Сейчас Вы находитесь здесь:</string>
     <string name="error_no_location_set">Текущее месторасположение еще не определено.</string>
     <string name="error_no_service_found">На устройстве не найдено программное обеспечение для работы с картами.</string>
+    <string name="error_not_all_permissions_granted">Пожалуйста, предоставьте все требуемые разрешения для корректной работы приложенния</string>
     <string name="dialog_enter_address">Введите адрес для поиска и отображения на карте:</string>
     <string name="btn_show">Показать</string>
     <string name="btn_cancel">Отменить</string>
+    <string name="no_data">Нет данных</string>
+    <string name="longitude">Долгота</string>
+    <string name="latitude">Широта</string>
+    <string name="address">Адресс</string>
+    <string name="check_view_inside">Отображать в программе</string>
 </resources>

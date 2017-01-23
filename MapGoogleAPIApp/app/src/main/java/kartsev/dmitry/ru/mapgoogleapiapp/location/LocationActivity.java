@@ -15,9 +15,15 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
+import kartsev.dmitry.ru.mapgoogleapiapp.R;
+
+import static kartsev.dmitry.ru.mapgoogleapiapp.R.id.map;
 
 public class LocationActivity extends Service implements LocationListener {
 
@@ -226,4 +232,75 @@ public class LocationActivity extends Service implements LocationListener {
         return null;
     }
 
+    public String getAddressByLoc(Location loc) {
+
+        if (location != null) {
+
+            // Create geocoder
+            final Geocoder geo = new Geocoder(mContext);
+
+            // Try to get addresses list
+            List<Address> list;
+            try {
+                list = geo.getFromLocation(loc.getLatitude(), loc.getLongitude(), 5);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.getLocalizedMessage();
+            }
+
+            // If list is empty, return "No data" string
+            if (list.isEmpty()) return getString(R.string.no_data);
+
+            // Get first element from List
+            Address a = list.get(0);
+
+            // Get a Postal Code
+            final int index = a.getMaxAddressLineIndex();
+            String postal = null;
+            if (index >= 0) {
+                postal = a.getAddressLine(index);
+            }
+
+            // Make address string
+            StringBuilder builder = new StringBuilder();
+            final String sep = ", ";
+            builder.append(postal).append(sep)
+                    .append(a.getCountryName()).append(sep)
+                    .append(a.getAdminArea()).append(sep)
+                    .append(a.getThoroughfare()).append(sep)
+                    .append(a.getSubThoroughfare());
+
+            return builder.toString();
+        }
+        return null;
+    }
+
+    public String getGeoCoordinates(Location location) {
+        String address = mContext.getString(R.string.address) + ": " + getAddressByLoc(location);
+        String coordinates = mContext.getString(R.string.latitude) + ": " + location.getLatitude() + ", "
+                + mContext.getString(R.string.longitude) + ": " + location.getLongitude();
+
+        return address + "\n" + coordinates;
+    }
+
+    public Location findLocationByAddress(String address) {
+        Location returnLocation = null;
+        if(address != null || !address.equalsIgnoreCase("")) {
+            Geocoder geo = new Geocoder(mContext);
+            List<Address> addressList = null;
+            try {
+                addressList = geo.getFromLocationName(address, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if(addressList != null) {
+                Address searchAddress = addressList.get(0);
+                returnLocation = new Location(LocationManager.GPS_PROVIDER);
+                returnLocation.setLongitude(searchAddress.getLongitude());
+                returnLocation.setLatitude(searchAddress.getLatitude());
+            }
+        }
+        return returnLocation;
+    }
 }

@@ -7,7 +7,14 @@
     <string name="hint_location">Current location is:</string>
     <string name="error_no_location_set">Current location is not set.</string>
     <string name="error_no_service_found">Google maps or other maps software not found on device.</string>
+    <string name="error_not_all_permissions_granted">Please provide all required permissions for correct work</string>
     <string name="dialog_enter_address">Please enter address for showing on map:</string>
     <string name="btn_show">Show</string>
     <string name="btn_cancel">Cancel</string>
+    <string name="google_maps_api_key">AIzaSyCodADkkE8qFhBhscXOFkTA04u9GQaw3M8</string>
+    <string name="no_data">No data</string>
+    <string name="longitude">Longitude</string>
+    <string name="latitude">Latitude</string>
+    <string name="address">Address</string>
+    <string name="check_view_inside">View inside app</string>
 </resources>
