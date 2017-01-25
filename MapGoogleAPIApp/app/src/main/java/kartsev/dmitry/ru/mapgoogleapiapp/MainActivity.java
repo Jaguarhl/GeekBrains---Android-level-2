@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String SEARCH_ADDRESS_LATITUDE = "SEARCH_ADDRESS_LATITUDE";
     public static final String SEARCH_ADDRESS_LONGITUDE = "SEARCH_ADDRESS_LONGITUDE";
     public static final String SEARCH_ADDRESS_ACTION = "SEARCH_ADDRESS_ACTION";
+    public static final String SEARCH_ADDRESS_REQUEST = "SEARCH_ADDRESS_REQUEST";
     LocationActivity locationActivity;
     private final Context mContext = this;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         checkViewMapInside = (CheckBox) findViewById(R.id.checkViewMapInside);
+        checkViewMapInside.setChecked(true);
     }
 
     private void setButtonsBehavior() {
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 String s = null;
                 try {
                     s = locationActivity.getLocationAddress();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if(s != null) {
@@ -164,10 +166,13 @@ public class MainActivity extends AppCompatActivity {
     private void searchAndShowAddress(String address) {
         if (checkViewMapInside.isChecked()) {
             Location loc = locationActivity.findLocationByAddress(address);
+            Log.d(LOG_TAG, loc.toString());
             Intent intent = new Intent(mContext, MapActivity.class);
-            intent.putExtra(SEARCH_ADDRESS_ACTION, SEARCH_ADDRESS_ACTION);
-            intent.putExtra(SEARCH_ADDRESS_LATITUDE, loc.getLatitude());
-            intent.putExtra(SEARCH_ADDRESS_LONGITUDE, loc.getLongitude());
+            Bundle b = new Bundle();
+            b.putString(SEARCH_ADDRESS_ACTION, SEARCH_ADDRESS_ACTION);
+            b.putDouble(SEARCH_ADDRESS_LATITUDE, loc.getLatitude());
+            b.putDouble(SEARCH_ADDRESS_LONGITUDE, loc.getLongitude());
+            intent.putExtras(b);
             mContext.startActivity(intent);
         } else {
             try {

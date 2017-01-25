@@ -151,7 +151,7 @@ public class LocationActivity extends Service implements LocationListener {
         return longitude;
     }
 
-    public String getLocationAddress() throws IOException {
+    public String getLocationAddress() {
         if(location != null) {
             try {
                 Geocoder gCoder = new Geocoder(mContext, Locale.getDefault());
@@ -264,8 +264,7 @@ public class LocationActivity extends Service implements LocationListener {
             // Make address string
             StringBuilder builder = new StringBuilder();
             final String sep = ", ";
-            builder.append(postal).append(sep)
-                    .append(a.getCountryName()).append(sep)
+            builder.append(a.getCountryName()).append(sep)
                     .append(a.getAdminArea()).append(sep)
                     .append(a.getThoroughfare()).append(sep)
                     .append(a.getSubThoroughfare());
@@ -284,8 +283,9 @@ public class LocationActivity extends Service implements LocationListener {
     }
 
     public Location findLocationByAddress(String address) {
-        Location returnLocation = null;
+        Location returnLocation = getLocation();
         if(address != null || !address.equalsIgnoreCase("")) {
+            Log.d(LOG_TAG, "Trying to extract address to location object");
             Geocoder geo = new Geocoder(mContext);
             List<Address> addressList = null;
             try {
@@ -302,5 +302,42 @@ public class LocationActivity extends Service implements LocationListener {
             }
         }
         return returnLocation;
+    }
+
+    public String getCityByLoc(Location loc) {
+        if (location != null) {
+
+            // Create geocoder
+            final Geocoder geo = new Geocoder(mContext);
+
+            // Try to get addresses list
+            List<Address> list;
+            try {
+                list = geo.getFromLocation(loc.getLatitude(), loc.getLongitude(), 5);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return e.getLocalizedMessage();
+            }
+
+            // If list is empty, return "No data" string
+            if (list.isEmpty()) return getString(R.string.no_data);
+
+            // Get first element from List
+            Address a = list.get(0);
+
+            // Get a Postal Code
+            final int index = a.getMaxAddressLineIndex();
+            String postal = null;
+            if (index >= 0) {
+                postal = a.getAddressLine(index);
+            }
+
+            // Make address string
+            StringBuilder builder = new StringBuilder();
+            builder.append(a.getAdminArea());
+
+            return builder.toString();
+        }
+        return null;
     }
 }

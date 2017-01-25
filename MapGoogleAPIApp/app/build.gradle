@@ -27,5 +27,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     //Google maps
     compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile('com.mikepenz:materialdrawer:5.8.1@aar') {
+        transitive = true
+    }
     testCompile 'junit:junit:4.12'
 }
