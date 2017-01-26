@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/mnu_markers_list" android:title="@string/mnu_markers_view_list"/>
-    <item android:id="@+id/mnu_markers_delete_all" android:title="@string/mnu_markers_delete_all"/>
+    <item android:id="@+id/mnu_marker_delete" android:title="@string/mnu_markers_delete"/>
 </menu>

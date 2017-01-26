@@ -1,4 +1,4 @@
-package kartsev.dmitry.ru.mapgoogleapiapp.location;
+package ru.dmitry.kartsev.mapgoogleapiapp.location;
 
 import android.app.AlertDialog;
 import android.app.Service;
@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-import kartsev.dmitry.ru.mapgoogleapiapp.R;
+import ru.dmitry.kartsev.mapgoogleapiapp.R;
 
-import static kartsev.dmitry.ru.mapgoogleapiapp.R.id.map;
+import static ru.dmitry.kartsev.mapgoogleapiapp.R.id.map;
 
 public class LocationActivity extends Service implements LocationListener {
 

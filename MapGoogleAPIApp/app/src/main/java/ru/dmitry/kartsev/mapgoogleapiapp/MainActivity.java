@@ -1,4 +1,4 @@
-package kartsev.dmitry.ru.mapgoogleapiapp;
+package ru.dmitry.kartsev.mapgoogleapiapp;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-import kartsev.dmitry.ru.mapgoogleapiapp.activity.MapActivity;
-import kartsev.dmitry.ru.mapgoogleapiapp.location.LocationActivity;
+import ru.dmitry.kartsev.mapgoogleapiapp.activity.MapActivity;
+import ru.dmitry.kartsev.mapgoogleapiapp.location.LocationActivity;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,7 +1,6 @@
-package kartsev.dmitry.ru.mapgoogleapiapp.activity;
+package ru.dmitry.kartsev.mapgoogleapiapp.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,8 +9,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,9 +34,13 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import kartsev.dmitry.ru.mapgoogleapiapp.MainActivity;
-import kartsev.dmitry.ru.mapgoogleapiapp.R;
-import kartsev.dmitry.ru.mapgoogleapiapp.location.LocationActivity;
+import java.util.List;
+
+import ru.dmitry.kartsev.mapgoogleapiapp.MainActivity;
+import ru.dmitry.kartsev.mapgoogleapiapp.R;
+import ru.dmitry.kartsev.mapgoogleapiapp.data.MarkerItem;
+import ru.dmitry.kartsev.mapgoogleapiapp.helpers.DBWork;
+import ru.dmitry.kartsev.mapgoogleapiapp.location.LocationActivity;
 
 /**
  * Created by Jag on 23.01.2017.
@@ -57,6 +58,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private LocationManager locationManager;
     private GoogleMap googleMap = null;
     private boolean setCurLocation = true;
+    private DBWork dbWork;
+
+    private static List<MarkerItem> markersList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,10 +69,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         initLocationManager();
         initViews();
-        /*
-        setSupportActionBar(toolbar);
-         */
         initDrawer();
+        dbWork = new DBWork(MapActivity.this);
+        markersList = dbWork.initDatabase();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(MapActivity.this);
@@ -87,7 +90,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void initViews() {
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
     }
 
     private void initLocationManager() {
@@ -101,8 +104,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         PrimaryDrawerItem primaryDrawerItem = new PrimaryDrawerItem();
         primaryDrawerItem.withName(R.string.side_menu_profile_1).withIcon(R.drawable.markers)
                 .withSubItems(
-                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_view_list)).withIdentifier(11),
-                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_delete_all)).withIdentifier(12));
+                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_view_on_map)).withIdentifier(11),
+                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_turn_off_on_map)).withIdentifier(12),
+                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_view_list)).withIdentifier(13),
+                        new SecondaryDrawerItem().withName(getBaseContext().getResources().getString(R.string.mnu_markers_delete_all)).withIdentifier(14));
 
         SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem();
         secondaryDrawerItem.withName(getResources().getString(R.string.side_menu_profile_2)).withIcon(R.drawable.ic_launcher)
@@ -125,28 +130,45 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        int id = (int)drawerItem.getIdentifier();
+                        int id = (int) drawerItem.getIdentifier();
                         switch (id) {
+                            case 11: {
+                                if (markersList.size() > 0) {
+                                    restoreMarkersOnMap();
+                                } else {
+                                    Toast.makeText(getBaseContext(), getString(R.string.error_marker_no_markers_to_display),
+                                            Toast.LENGTH_LONG).show();
+                                }
+                                break;
+                            }
+                            case 12: {
+                                googleMap.clear();
+                                break;
+                            }
+                            case 13: {
+                                MarkerListActivity.openView(MapActivity.this, markersList);
+                                break;
+                            }
                             case 21: {
-                                if((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_NORMAL)) {
+                                if ((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_NORMAL)) {
                                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                                 }
                                 break;
                             }
                             case 22: {
-                                if((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_SATELLITE)) {
+                                if ((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_SATELLITE)) {
                                     googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                                 }
                                 break;
                             }
                             case 23: {
-                                if((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_TERRAIN)) {
+                                if ((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_TERRAIN)) {
                                     googleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                                 }
                                 break;
                             }
                             case 24: {
-                                if((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_HYBRID)) {
+                                if ((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_HYBRID)) {
                                     googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                                 }
                                 break;
@@ -162,6 +184,23 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .build();
     }
 
+    private void restoreMarkersOnMap() {
+        googleMap.clear();
+        for (MarkerItem item : markersList) {
+            LatLng target = new LatLng(item.getMarkerLatitude(), item.getMarkerLongitude());
+            try {
+                googleMap.addMarker(new MarkerOptions()
+                        .position(target)
+                        .title(item.getMarkerName())
+                        .snippet(item.getMarkerDescription())
+                        .visible(true));
+                Log.d(LOG_TAG, "Marker added on " + target.toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void searchAddress() {
         LayoutInflater inflater = LayoutInflater.from(MapActivity.this);
         View addressDlg = inflater.inflate(R.layout.enter_address_dialog, null);
@@ -174,14 +213,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .setCancelable(false)
                 .setPositiveButton(MapActivity.this.getResources().getString(R.string.btn_show),
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 setCurrentLocation(locationActivity.findLocationByAddress(
                                         addressToSearch.getText().toString()), true);
                             }
                         })
                 .setNegativeButton(MapActivity.this.getResources().getString(R.string.btn_cancel),
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         });
@@ -190,11 +229,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void setCurrentLocation(Location location, boolean search) {
-        if(googleMap != null) {
+        if (googleMap != null) {
             LatLng target = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate camUpdate = CameraUpdateFactory.newLatLngZoom(target, 15F);
             googleMap.animateCamera(camUpdate);
-            if(search) {
+            if (search) {
                 googleMap.addMarker(new MarkerOptions()
                         .position(target)
                         .title(locationActivity.getAddressByLoc(location)));
@@ -218,14 +257,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             // Enable zoom controls
             googleMap.getUiSettings().setZoomControlsEnabled(true);
 
+            restoreMarkersOnMap();
+
             //Show my location at map
-            if(setCurLocation) {
+            if (setCurLocation) {
                 final Location location = locationActivity.getLocation();
                 // If location available
                 if (location != null) {
                     setCurrentLocation(location, false);
                 }
-            } else if(searchLocation != null) {
+            } else if (searchLocation != null) {
                 setCurrentLocation(searchLocation, true);
                 Log.d(LOG_TAG, "Displaying map with location " + searchLocation.toString());
             }
@@ -248,7 +289,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             });
 
         } else {
-            Toast.makeText(getBaseContext(), getString(R.string.error_not_all_permissions_granted), Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), getString(R.string.error_not_all_permissions_granted),
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -265,20 +307,22 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .setCancelable(false)
                 .setPositiveButton(MapActivity.this.getResources().getString(R.string.btn_add_marker),
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                if(markerName.getText().length() > 3) {
-                                    googleMap.addMarker(new MarkerOptions()
-                                            .position(latLng)
-                                            .title(markerName.getText().toString())
-                                            .snippet(markerDescription.getText().toString()));
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (markerName.getText().length() > 3) {
+                                    markersList.add(dbWork.addMarker(new MarkerItem(markerName.getText().toString(),
+                                            markerDescription.getText().toString(), latLng.latitude,
+                                            latLng.longitude, true)));
+                                    Log.d(LOG_TAG, "Marker added on " + latLng.toString());
+                                    restoreMarkersOnMap();
                                 } else {
-                                    Toast.makeText(MapActivity.this, getResources().getString(R.string.error_marker_name_is_empty), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MapActivity.this, getResources().getString(R.string.error_marker_name_is_empty),
+                                            Toast.LENGTH_LONG).show();
                                 }
                             }
                         })
                 .setNegativeButton(MapActivity.this.getResources().getString(R.string.btn_cancel),
                         new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
                         });

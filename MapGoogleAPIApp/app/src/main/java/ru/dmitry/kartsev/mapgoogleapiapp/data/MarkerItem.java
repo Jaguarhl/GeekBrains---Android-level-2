@@ -1,4 +1,4 @@
-package kartsev.dmitry.ru.mapgoogleapiapp.data;
+package ru.dmitry.kartsev.mapgoogleapiapp.data;
 
 /**
  * Created by Jag on 25.01.2017.
@@ -9,12 +9,24 @@ public class MarkerItem {
     private double markerLongitude;
     private String markerName;
     private String markerDescription;
+    private boolean markerActive;
+    private int markerIdInDB;
 
-    public MarkerItem(String name, String desc, double lat, double lng) {
+    public MarkerItem(int idInDB, String name, String desc, double lat, double lng, boolean active) {
+        this.markerIdInDB = idInDB;
         this.markerName = name;
         this.markerDescription = desc;
         this.markerLatitude = lat;
         this.markerLongitude = lng;
+        this.markerActive = active;
+    }
+
+    public MarkerItem(String name, String desc, double lat, double lng, boolean active) {
+        this.markerName = name;
+        this.markerDescription = desc;
+        this.markerLatitude = lat;
+        this.markerLongitude = lng;
+        this.markerActive = active;
     }
 
     public double getMarkerLatitude() {
@@ -47,5 +59,21 @@ public class MarkerItem {
 
     public void setMarkerDescription(String markerDescription) {
         this.markerDescription = markerDescription;
+    }
+
+    public boolean isMarkerActive() {
+        return markerActive;
+    }
+
+    public void setMarkerActive(boolean markerActive) {
+        this.markerActive = markerActive;
+    }
+
+    public int getMarkerIdInDB() {
+        return markerIdInDB;
+    }
+
+    public void setMarkerIdInDB(int markerIdInDB) {
+        this.markerIdInDB = markerIdInDB;
     }
 }
