@@ -149,6 +149,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                 MarkerListActivity.openView(MapActivity.this, markersList);
                                 break;
                             }
+                            case 14: {
+                                if(markersList.size() > 0) {
+                                    dbWork.deleteAllMarkers();
+                                    markersList.clear();
+                                    googleMap.clear();
+                                }
+                                break;
+                            }
                             case 21: {
                                 if ((googleMap != null) & (googleMap.getMapType() != GoogleMap.MAP_TYPE_NORMAL)) {
                                     googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);

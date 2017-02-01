@@ -90,12 +90,15 @@ public class DBWork {
     public void deleteMarker(int id) {
         dbHelper = new DBHelper(mContext);
         database = dbHelper.getWritableDatabase();
-        /*ContentValues cv = new ContentValues();
-        Cursor c = database.query(DBHelper.TB_NAME, new String[] {(DBHelper.TB_ID_COL_NAME)},
-        String.valueOf(Integer.toString(id)),
-                null, null, null, null);  */
         database.delete(DBHelper.TB_NAME, DBHelper.QUERY_ID,
                 new String[]{(Integer.toString(id) )});
+        dbHelper.close();
+    }
+
+    public void deleteAllMarkers() {
+        dbHelper = new DBHelper(mContext);
+        database = dbHelper.getWritableDatabase();
+        database.execSQL(DBHelper.DELETE_FROM + " " + DBHelper.TB_NAME);
         dbHelper.close();
     }
 }

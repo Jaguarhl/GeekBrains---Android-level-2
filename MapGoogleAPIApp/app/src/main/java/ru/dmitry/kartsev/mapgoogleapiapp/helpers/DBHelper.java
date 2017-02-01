@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TB_LNG_COL_NAME = "longitude";
     public static final String TB_ID_COL_NAME = "_id";
     public static final String QUERY_ID = "_id=?";
+    public static final String DELETE_FROM = "DELETE FROM";
     final String DROP_TABLE = "DROP TABLE IF EXISTS " + TB_NAME;
 
 
